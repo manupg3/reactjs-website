@@ -1,10 +1,47 @@
 .App {
-  text-align: center;
+ 
+}
+.contact-frm-custom1{
+  background-position: 50%; 
+  background-image: url('https://mdbootstrap.com/img/new/textures/full/171.jpg');
+  height: 300px;
+}
+.contact-frm-custom2{
+  margin-top: -100px; 
+  background: hsla(0, 0%, 100%, 0.8); 
+  backdrop-filter: blur(30px);
+}
+.back-linear{
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://www.burohappold.com/wp-content/uploads/2020/02/experts-in-tall-buildings-burohappold_getty.jpg");
+}
+.cursor::after {
+  display: block;
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 100%;
+  background-color: black;
+  animation: cursor 0.6s linear infinite alternate;
+  will-change: opacity;
 }
 
+@keyframes cursor {
+  0%,
+  40% {
+    opacity: 1;
+  }
+
+  60%,
+  100% {
+    opacity: 0;
+  }
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+.svg-inline--fa{
+  height: 1.4rem !important;
 }
 
 @media (prefers-reduced-motion: no-preference) {
