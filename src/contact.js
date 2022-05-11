@@ -1,23 +1,9 @@
 import './App.css';
 import React, {useState} from 'react';
-
+import {Formik,Form,Field,ErrorMessage} from 'formik';
 
 export default function Contact() {
-  const [inputNombre, setInputNombre] = useState('');
-  const [inputPassword, setInputPassword] = useState('');
-  const [inputConsulta, setInputConsulta] = useState('');
-
-  const handleSubmit = (e) =>{
-
-    e.preventDefault();
-    console.log("FORMULARIO ENVIADO",e);
-  
-  }
-
-  const handleInputNombre = (e) =>{
-   setInputNombre(e.target.value);
-  
-  }
+const [formSend,changeFormSend] = useState(false);
 
   return (
     <div className="App-contact text-center">
@@ -49,9 +35,50 @@ export default function Contact() {
         </div>
       </div>
       <div class="max-w-[700px] mx-auto">
-        <form action='' onSubmit={handleSubmit}>
+      <Formik
+      initialValues={{
+         nombre:'',
+         email:'',
+         consulta:''
+      }}
+      onSubmit = {(values,{resetForm}) => {
+           resetForm();
+           changeFormSend(true);
+           setTimeout(() => {
+             changeFormSend(false);
+           }, 5000);
+           console.log("Nombre",values.nombre);
+
+      }}
+      validate = {(values) => {
+         let errores={};
+
+        if(!values.nombre){
+          errores.nombre = "Por favor ingresa tu nombre";
+        }else if(!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.nombre)){
+           errores.nombre = "El nombre solo puede contener letras y espacios";
+        }
+        
+        if(!values.email){
+          errores.email = "Por favor debes ingresar un email";
+        }else if(!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(values.email)){
+          errores.email = "Debe ser un email valido";
+       }
+        
+        if(!values.consulta){
+          errores.consulta = "Por favor debes ingresar una consulta";
+        }
+         return errores;
+   }}
+   
+      >
+        
+        
+
+        {({errors}) => ( 
+        <Form action='' >
           <div class="form-group mb-6">
-            <input type="text" class="form-control block
+            <Field type="text" id="nombre" class="form-control block
             w-full
             px-3
             py-1.5
@@ -64,14 +91,18 @@ export default function Contact() {
             transition
             ease-in-out
             m-0
-            focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleInput7"
+            focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
               placeholder="Nombre" 
-              value={inputNombre}
-              onChange={handleInputNombre}
+              name="nombre"
               />
           </div>
+          <ErrorMessage name='nombre' component={() =>( 
+          <div className='float-left mt-[-22px] text-red-800 font-semibold mb-4'>{errors.nombre}</div>
+          )} 
+             
+          />
           <div class="form-group mb-6">
-            <input type="email" class="form-control block
+            <Field type="email" class="form-control block
             w-full
             px-3
             py-1.5
@@ -84,11 +115,17 @@ export default function Contact() {
             transition
             ease-in-out
             m-0
-            focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleInput8"
-              placeholder="Email" />
+            focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" 
+            id="email"
+            name="email"
+            placeholder="Email" />
           </div>
+          <ErrorMessage name='email' component={() =>( 
+          <div className='float-left mt-[-22px] text-red-800 font-semibold mb-4'>{errors.email}</div>
+          )}  
+          />
           <div class="form-group mb-6">
-            <textarea class="
+            <Field as="textarea" class="
             form-control
             block
             w-full
@@ -104,9 +141,16 @@ export default function Contact() {
             ease-in-out
             m-0
             focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
-          " id="exampleFormControlTextarea13" rows="3" placeholder="Consulta"></textarea>
+          " id="consulta" name="consulta" rows="3" placeholder="Consulta" 
+          
+            />
+          
           </div>
-       
+          <ErrorMessage name='consulta' component={() =>( 
+          <div className='float-left mt-[-22px] text-red-800 font-semibold mb-4'>{errors.consulta}</div>
+          )} 
+             
+          />
           <button type="submit" class="
           w-full
           px-6
@@ -125,7 +169,10 @@ export default function Contact() {
           transition
           duration-150
           ease-in-out">Enviar Consulta</button>
-        </form>
+          {formSend && <p className='pt-6 text-lg font-semibold text-green-600'>Tu consulta fue recibida con exito</p>}
+        </Form>
+        )}
+        </Formik>
       </div>
     </div>
   </div>
