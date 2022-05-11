@@ -1,6 +1,7 @@
 import './App.css';
 import React, {useState} from 'react';
 import {Formik,Form,Field,ErrorMessage} from 'formik';
+import Axios from 'axios';
 
 export default function Contact() {
 const [formSend,changeFormSend] = useState(false);
@@ -43,7 +44,15 @@ const [formSend,changeFormSend] = useState(false);
       }}
       onSubmit = {(values,{resetForm}) => {
            resetForm();
+           const nombre = values.nombre;
+           const email = values.email;
+           const consulta = values.consulta;
+            
            changeFormSend(true);
+           Axios.post('http://localhost:3001/create', {nombre: values.nombre, email: values.email,
+            consulta: values.consulta}).then(()=>{ 
+              console.log("SUCCESS")
+              });
            setTimeout(() => {
              changeFormSend(false);
            }, 5000);
