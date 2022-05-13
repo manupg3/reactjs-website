@@ -5,6 +5,9 @@ import Home from './home';
 import About from './about';
 import Services from './services';
 import Contact from './contact';
+import Dashboard from './dashboard';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 export default function App() {
   return (
@@ -15,6 +18,8 @@ export default function App() {
       <Route path="services" element={<Services />} />
       <Route path="about" element={<About />} />
       <Route path="contact" element={<Contact />} />
+      <Route path="dashboard" element={<Dashboard />} />
+
     </Routes>
   </div>
 

@@ -3,7 +3,13 @@ const app = express();
 const mysql = require('mysql');
 const cors = require('cors');
 
-app.use(cors());
+
+const corsOptions = {
+	origin: "*"
+};
+app.use(cors(corsOptions));
+
+
 app.use(express.json());
 
 const db = mysql.createConnection({
@@ -28,9 +34,35 @@ app.post('/create', (req,res) => {
         res.send("CONSULTA AGREGADA");
     }
 });
-
-
 });
+
+app.get('/getconsults', (req,res) => {
+ 
+    db.query('SELECT * FROM consultas', 
+  (error,result)=>{
+      if(error){
+          console.Console("ERROR",error);
+      }
+      else{
+          res.send(result);
+      }
+  });
+  });
+
+  app.delete('/delete/:id', (req,res) => {
+     const id = req.params.id;
+     db.query("DELETE FROM consultas WHERE id = ?", id , (err,result ) =>
+     {
+        if(err){
+            console.log("ERROR",err);
+        }   
+        else{
+            res.send(result);
+        }
+     });
+
+  });
+  
 
 
 app.listen(3001, ()=>{

@@ -1,6 +1,17 @@
 .App {
  
 }
+.accordion-button{
+  display: block;
+}
+.accordion-header button{
+  display: block;
+  text-align: center !important;
+}
+.about-custom{
+  background: hsla(0, 0%, 100%, 0.55); 
+  backdrop-filter: blur(30px);
+}
 .contact-frm-custom1{
   background-position: 50%; 
   background-image: url('https://mdbootstrap.com/img/new/textures/full/171.jpg');
@@ -71,5 +82,10 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+@media screen and (min-width: 992px) {
+  #cta-img-nml-50 {
+    margin-left: 50px;
   }
 }
